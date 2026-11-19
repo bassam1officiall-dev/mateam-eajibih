@@ -14,6 +14,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import { MENU_DATA, WHATSAPP_NUMBER, PHONE_NUMBER } from './menuData';
+import logoImg from './assets/logo.jpg';
 
 // ─── Custom Brush Stroke SVG Accent ───
 const BrushAccent = ({ color = '#F5A623', width = 120, height = 8 }) => (
@@ -40,17 +41,11 @@ export function normalizeArabic(text) {
     .toString()
     .trim()
     .toLowerCase()
-    // Remove Arabic Tashkeel / Diacritics
     .replace(/[\u064B-\u065F\u0670]/g, '')
-    // Remove Tatweel (Kashida)
     .replace(/\u0640/g, '')
-    // Normalize Alef variants
     .replace(/[أإآٱ]/g, 'ا')
-    // Normalize Taa Marbuta to Haa
     .replace(/ة/g, 'ه')
-    // Normalize Yaa variants (Alif Maqsura to Yaa)
     .replace(/ى/g, 'ي')
-    // Normalize multiple spaces into single space
     .replace(/\s+/g, ' ');
 }
 
@@ -126,8 +121,6 @@ export default function App() {
     let count = 0;
 
     const sections = MENU_DATA.map(section => {
-      // 1. If user is searching: search globally across ALL sections regardless of activeCategory!
-      // 2. If NOT searching: respect activeCategory filter.
       if (!isSearching && activeCategory !== 'all' && activeCategory !== section.id) {
         return null;
       }
@@ -139,13 +132,9 @@ export default function App() {
         const sectionMatchesQuery = normalizedSectionTitle.includes(normalizedQuery);
 
         items = items.filter(item => {
-          // Check item name
           if (normalizeArabic(item.name).includes(normalizedQuery)) return true;
-          // Check description / ingredients
           if (item.desc && normalizeArabic(item.desc).includes(normalizedQuery)) return true;
-          // Check tag
           if (item.tag && normalizeArabic(item.tag).includes(normalizedQuery)) return true;
-          // If the section title matched (e.g. searched for "بيتزا" or "وافل"), include items
           if (sectionMatchesQuery) return true;
           return false;
         });
@@ -305,17 +294,16 @@ export default function App() {
           {/* Logo & Name */}
           <div className="flex items-center gap-3">
             <img 
-              src="public/images/logo.jpg" 
+              src={logoImg} 
               alt="شعار مطعم عجيبة" 
-              className="w-11 h-11 rounded-lg object-cover border border-[#F5A623]/30 shadow-md"
-              onError={(e) => { e.target.src = 'logo.jpg'; }}
+              className="w-11 h-11 rounded-xl object-cover border-2 border-[#F5A623]/40 shadow-md shadow-black/40"
             />
             <div>
               <div className="flex items-center gap-1.5">
                 <h1 className="font-heading font-black text-xl text-[#FFFFFF] tracking-tight leading-none">
                   مطعم عجيبة
                 </h1>
-                <span className="text-[10px] font-bold font-heading bg-[#C41E24] text-white px-1.5 py-0.5 rounded">
+                <span className="text-[10px] font-bold font-heading bg-[#C41E24] text-white px-1.5 py-0.5 rounded shadow-sm">
                   الأصلي
                 </span>
               </div>
@@ -370,12 +358,14 @@ export default function App() {
 
       {/* ─── MAIN HERO BANNER ─── */}
       <div className="relative z-10 max-w-xl mx-auto px-4 pt-3 pb-2">
-        {/* Street Trust Bar */}
+        {/* Street Trust Bar with Official Logo */}
         <div className="bg-gradient-to-r from-[#1E1E24] via-[#1A1A1D] to-[#1E1E24] border border-[#2E2E35] rounded-xl p-3 shadow-md flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#C41E24]/15 border border-[#C41E24]/30 flex items-center justify-center text-[#C41E24] font-heading font-black text-sm">
-              ع
-            </div>
+            <img 
+              src={logoImg} 
+              alt="مطعم عجيبة" 
+              className="w-9 h-9 rounded-lg object-cover border border-[#F5A623]/30 shrink-0 shadow-sm"
+            />
             <div>
               <div className="text-xs font-bold text-white font-heading">
                 توصيل سريع لأي مكان في الجيزة
@@ -637,28 +627,27 @@ export default function App() {
 
       {/* ─── OFFICIAL STORE PLEDGE FOOTER ─── */}
       <footer className="relative z-10 max-w-xl mx-auto px-4 mt-12 mb-6">
-        <div className="bg-gradient-to-b from-[#1A1A1D] to-[#141416] border border-[#27272A] rounded-2xl p-5 text-center shadow-lg">
+        <div className="bg-gradient-to-b from-[#1A1A1D] to-[#141416] border border-[#27272A] rounded-2xl p-6 text-center shadow-lg">
           <img 
-            src="public/images/logo.jpg" 
-            alt="مطعم عجيبة" 
-            className="w-12 h-12 rounded-xl mx-auto mb-3 object-cover border border-[#F5A623]/40 shadow-sm"
-            onError={(e) => { e.target.src = 'logo.jpg'; }}
+            src={logoImg} 
+            alt="شعار مطعم عجيبة الرسمي" 
+            className="w-16 h-16 rounded-2xl mx-auto mb-3.5 object-cover border-2 border-[#F5A623] shadow-lg shadow-[#F5A623]/10"
           />
 
-          <p className="font-heading font-black text-sm text-[#F5A623] tracking-wide mb-1">
+          <p className="font-heading font-black text-base text-[#F5A623] tracking-wide mb-1.5">
             «إن أرضيناك فتحدث عنا.. وإن لم نرضيك فتحدث إلينا»
           </p>
-          <p className="text-xs text-[#888890] max-w-sm mx-auto mb-4 leading-relaxed">
-            مطعم عجيبة — البدرشين، شارع عباس عناني بجوار كازيون ماركت. جودة نتشرف بها وخدمة تليق بحضراتكم.
+          <p className="text-xs text-[#B8B8C0] max-w-sm mx-auto mb-4 leading-relaxed font-normal">
+            مطعم عجيبة — البدرشين، شارع عباس عناني بجوار كازيون ماركت. طعم أصيل وجودة تليق بأهلنا.
           </p>
 
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-2.5">
             <motion.a
               whileTap={{ scale: 0.95 }}
               href={`tel:${PHONE_NUMBER}`}
-              className="px-4 py-2 bg-[#1F1F24] border border-[#2E2E35] rounded-lg text-xs font-heading font-bold text-white flex items-center gap-1.5 hover:bg-[#26262B]"
+              className="px-4 py-2 bg-[#1F1F24] border border-[#2E2E35] rounded-xl text-xs font-heading font-bold text-white flex items-center gap-1.5 hover:bg-[#26262B]"
             >
-              <Phone size={13} className="text-[#C41E24]" />
+              <Phone size={14} className="text-[#C41E24]" />
               {PHONE_NUMBER}
             </motion.a>
             <motion.a
@@ -666,9 +655,9 @@ export default function App() {
               href={`https://wa.me/${WHATSAPP_NUMBER}`}
               target="_blank"
               rel="noopener"
-              className="px-4 py-2 bg-[#25D366]/15 border border-[#25D366]/30 rounded-lg text-xs font-heading font-bold text-[#25D366] flex items-center gap-1.5 hover:bg-[#25D366]/25"
+              className="px-4 py-2 bg-[#25D366]/15 border border-[#25D366]/30 rounded-xl text-xs font-heading font-bold text-[#25D366] flex items-center gap-1.5 hover:bg-[#25D366]/25"
             >
-              <MessageCircle size={13} />
+              <MessageCircle size={14} />
               واتساب عجيبة
             </motion.a>
           </div>
@@ -687,20 +676,20 @@ export default function App() {
           >
             <div 
               onClick={() => setIsCartOpen(true)}
-              className="bg-[#C41E24] hover:bg-[#B31A20] text-white rounded-2xl p-3.5 px-4 shadow-[0_8px_30px_rgba(196,30,36,0.5)] flex items-center justify-between cursor-pointer border border-[#E03A40]/40 transition-colors"
+              className="bg-[#C41E24] hover:bg-[#B31A20] text-white rounded-2xl p-3 px-4 shadow-[0_8px_30px_rgba(196,30,36,0.5)] flex items-center justify-between cursor-pointer border border-[#E03A40]/40 transition-colors"
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-black/20 flex items-center justify-center relative">
-                  <ShoppingBag size={20} className="text-white" />
-                  <span className="absolute -top-1 -right-1 bg-[#F5A623] text-black text-[11px] font-heading font-black w-5 h-5 rounded-full flex items-center justify-center shadow">
+                <div className="w-10 h-10 rounded-xl bg-black/25 flex items-center justify-center relative border border-white/10">
+                  <ShoppingBag size={19} className="text-white" />
+                  <span className="absolute -top-1.5 -right-1.5 bg-[#F5A623] text-black text-[11px] font-heading font-black w-5 h-5 rounded-full flex items-center justify-center shadow">
                     {totalCartCount}
                   </span>
                 </div>
                 <div>
-                  <span className="text-xs text-white/80 block font-heading">
+                  <span className="text-[11px] text-white/80 block font-heading">
                     السلة الحالية
                   </span>
-                  <span className="text-lg font-heading font-black text-white">
+                  <span className="text-lg font-heading font-black text-white leading-tight">
                     {totalCartPrice} <span className="text-xs font-normal">جنيه</span>
                   </span>
                 </div>
@@ -737,15 +726,22 @@ export default function App() {
               <div className="w-12 h-1.5 bg-[#2E2E35] rounded-full mx-auto my-3" />
 
               <div className="p-5 pt-1">
-                {/* Header */}
+                {/* Header with Item Title and Official Logo seal */}
                 <div className="flex items-start justify-between pb-3 border-b border-[#27272A]">
-                  <div>
-                    <h3 className="font-heading font-black text-xl text-white">
-                      {customizingItem.name}
-                    </h3>
-                    {customizingItem.desc && (
-                      <p className="text-xs text-[#B8B8C0] mt-1">{customizingItem.desc}</p>
-                    )}
+                  <div className="flex items-start gap-3">
+                    <img 
+                      src={logoImg} 
+                      alt="عجيبة" 
+                      className="w-8 h-8 rounded-lg object-cover border border-[#F5A623]/30 shrink-0 mt-0.5" 
+                    />
+                    <div>
+                      <h3 className="font-heading font-black text-xl text-white">
+                        {customizingItem.name}
+                      </h3>
+                      {customizingItem.desc && (
+                        <p className="text-xs text-[#B8B8C0] mt-1">{customizingItem.desc}</p>
+                      )}
+                    </div>
                   </div>
                   <button
                     onClick={() => setCustomizingItem(null)}
@@ -906,8 +902,12 @@ export default function App() {
 
               <div className="p-5 pt-1">
                 <div className="flex items-center justify-between pb-3 border-b border-[#27272A]">
-                  <div className="flex items-center gap-2">
-                    <ShoppingBag size={20} className="text-[#C41E24]" />
+                  <div className="flex items-center gap-2.5">
+                    <img 
+                      src={logoImg} 
+                      alt="لوجو عجيبة" 
+                      className="w-8 h-8 rounded-lg object-cover border border-[#F5A623]/30" 
+                    />
                     <h3 className="font-heading font-black text-xl text-white">
                       سلة طلبات عجيبة
                     </h3>
