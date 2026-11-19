@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>مطعم عجيبة | منيو السعادة</title>
+  <meta name="description" content="منيو مطعم عجيبة في البدرشين، شارع عباس عناني. كريب، بيتزا، حواوشي القنبلة، ساندوتشات، وافل، وحلويات. توصيل لأي مكان في الجيزة.">
+  <meta name="theme-color" content="#121214">
+
+  <!-- Favicon / Logo -->
+  <link rel="icon" type="image/jpeg" href="public/images/logo.jpg">
+  <link rel="apple-touch-icon" href="public/images/logo.jpg">
+
+  <!-- Google Fonts: Cairo & IBM Plex Sans Arabic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS Engine -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            agebaRed: '#C41E24',
+            agebaAmber: '#F5A623',
+            chalkDark: '#121214',
+            chalkCard: '#1A1A1D',
+            chalkBorder: '#27272A',
+          },
+          fontFamily: {
+            sans: ['"IBM Plex Sans Arabic"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            heading: ['Cairo', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    html, body {
+      background-color: #121214;
+      color: #FFFFFF;
+      font-family: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #121214;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #27272A;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3F3F46;
+    }
+    button, a, input, select, textarea {
+      touch-action: manipulation;
+    }
+  </style>
+</head>
+<body class="bg-[#121214] text-[#FFFFFF]">
+  <!-- React Mount Root (Clean mount with zero blocking splash) -->
+  <div id="root"></div>
+
+  <!-- Bundled React + Framer Motion Application -->
+  <script src="bundle.js"></script>
+</body>
+</html>
