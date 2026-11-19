@@ -8,8 +8,8 @@
   <meta name="theme-color" content="#121214">
 
   <!-- Favicon / Logo -->
-  <link rel="icon" type="image/jpeg" href="public/images/logo.jpg">
-  <link rel="apple-touch-icon" href="public/images/logo.jpg">
+  <link rel="icon" type="image/jpeg" href="/public/images/logo.jpg">
+  <link rel="apple-touch-icon" href="/public/images/logo.jpg">
 
   <!-- Google Fonts: Cairo & IBM Plex Sans Arabic -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,10 +71,10 @@
   </style>
 </head>
 <body class="bg-[#121214] text-[#FFFFFF]">
-  <!-- React Mount Root (Clean mount with zero blocking splash) -->
+  <!-- React Mount Root -->
   <div id="root"></div>
 
-  <!-- Bundled React + Framer Motion Application -->
-  <script src="bundle.js"></script>
+  <!-- Vite Entry Point -->
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
